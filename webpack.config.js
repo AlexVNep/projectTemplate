@@ -10,8 +10,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      title: "Dynamic UI Interactions",
+      template: "./src/template.html",
+      title: "",
       inject: "body",
     }),
   ],
@@ -27,8 +27,23 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
+      },
+      {
+        test: /\.(?:js|mjs|cjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            targets: "defaults",
+            presets: [["@babel/preset-env"]],
+          },
+        },
       },
     ],
   },
